@@ -1,0 +1,3 @@
+C:/Users/Albie/Documents/ESTUDOS/UNEB/3° SEMESTRE/INT ESTRUTURA DE DADOS/exercicios/lista2/ex10/cmake-build-debug/CMakeFiles/ex10.dir
+C:/Users/Albie/Documents/ESTUDOS/UNEB/3° SEMESTRE/INT ESTRUTURA DE DADOS/exercicios/lista2/ex10/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Albie/Documents/ESTUDOS/UNEB/3° SEMESTRE/INT ESTRUTURA DE DADOS/exercicios/lista2/ex10/cmake-build-debug/CMakeFiles/rebuild_cache.dir
