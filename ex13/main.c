@@ -3,68 +3,71 @@
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #define ROWS 3
 #define COLUMNS 4
 
 int matriz[ROWS][COLUMNS];
 
-void readMatriz();
-
-int biggerColumn(int, int);
+void readMatriz(int, int);
+void show(int, int);
+void findBiggerColumn(int, int, int, int, int);
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese");
-    srand(time(NULL));
 
-    readMatriz();
-
-    printf("A coluna com maior soma é a %d\n", biggerColumn(COLUMNS, 0) + 1);
+    readMatriz(0, 0);
+    show(0, 0);
+    findBiggerColumn(0, 0, 0, 0, 0);
 
     system("pause");
     return 0;
 }
 
-void readMatriz() {
-    for (int i = 0; i < ROWS; ++i) {
-        for (int j = 0; j < COLUMNS; ++j) {
-            matriz[i][j] = rand() % 50;
-            printf("%4d", matriz[i][j]);
+void readMatriz(int row, int column) {
+    if (row < ROWS && column < COLUMNS) {
+        printf("Posição [%d][%d]: ", (row + 1), (column + 1));
+        scanf("%d", &matriz[row][column]);
+        fflush(stdin);
+        system("cls");
+
+        if (column == COLUMNS - 1) {
+            readMatriz(row + 1, 0);
+        } else {
+            readMatriz(row, column + 1);
         }
-        printf("\n");
     }
 }
 
-int biggerColumn(int position, int previousSum) {
-    if (position == COLUMNS) {
-        --position;
-    }
+void show(int row, int column) {
+    if (row < ROWS && column < COLUMNS) {
+        printf("%3d", matriz[row][column]);
 
-    int bigger = position;
-
-    if (position >= 0) {
-        int sum = 0;
-
-        for (int i = 0; i < ROWS; ++i) {
-            sum += matriz[i][position];
-        }
-
-        if (previousSum > sum) {
-            bigger = position + 1;
+        if (column == COLUMNS - 1) {
+            printf("\n");
+            show(row + 1, 0);
         } else {
-            bigger = position;
+            show(row, column + 1);
         }
-
-        int result = biggerColumn(position - 1, sum);
-        int sumResult = 0;
-
-        for (int i = 0; i < ROWS; ++i) {
-            sumResult += matriz[i][result];
-        }
-        if (sumResult > sum) {
-            bigger = result;
-        }
-
+    } else {
+        printf("\n\n");
     }
-    return bigger;
+}
+
+void findBiggerColumn(int row, int column, int sum, int biggerSum, int biggerColumn) {
+    if (column < COLUMNS) {
+        sum += matriz[row][column];
+
+        if (row == ROWS - 1) {
+            if (sum > biggerSum) {
+                biggerSum = sum;
+                biggerColumn = column;
+            }
+
+            findBiggerColumn(0, column + 1, 0, biggerSum, biggerColumn);
+        } else {
+            findBiggerColumn(row + 1, column, sum, biggerSum, biggerColumn);
+        }
+    } else {
+        printf("A coluna %d tem a maior soma (%d)\n", (biggerColumn + 1), biggerSum);
+    }
 }
