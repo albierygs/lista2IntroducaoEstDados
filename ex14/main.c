@@ -10,16 +10,16 @@
 int matriz[ROWS][COLUMNS];
 
 void readMatriz(int, int, int);
-void showMatriz();
-void calculateColumns(int);
+void showMatriz(int, int);
+void calculateColumns(int, int, int);
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
 
     readMatriz(0, 0, 0);
-    showMatriz();
-    calculateColumns(0);
+    showMatriz(0, 0);
+    calculateColumns(0, 0, 0);
 
     system("pause");
     return 0;
@@ -58,27 +58,30 @@ void readMatriz(int row, int column, int lastNumber) {
     }
 }
 
-void showMatriz() {
-    printf("\n\n");
-    for (int i = 0; i < ROWS; ++i) {
-        for (int j = 0; j < COLUMNS; ++j) {
-            printf("%4d", matriz[i][j]);
+void showMatriz(int row, int column) {
+    if (row < ROWS && column < COLUMNS) {
+        printf("%3d", matriz[row][column]);
+
+        if (column == COLUMNS - 1) {
+            printf("\n");
+            showMatriz(row + 1, 0);
+        } else {
+            showMatriz(row, column + 1);
         }
-        printf("\n");
+    } else {
+        printf("\n\n");
     }
-    printf("\n\n");
 }
 
-void calculateColumns(int column) {
+void calculateColumns(int row, int column, int sum) {
     if (column < COLUMNS) {
-        int sum = 0;
+        sum += matriz[row][column];
 
-        for (int i = 0; i < ROWS; ++i) {
-            sum += matriz[i][column];
+        if (row == ROWS - 1) {
+            printf("A soma da coluna %d é %d\n", column + 1, sum);
+            calculateColumns(0, column + 1, 0);
+        } else {
+            calculateColumns(row + 1, column, sum);
         }
-
-        printf("A soma da coluna %d é %d\n", column + 1, sum);
-
-        calculateColumns(column + 1);
     }
 }
