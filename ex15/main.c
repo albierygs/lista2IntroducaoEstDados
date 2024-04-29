@@ -4,11 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define T 5
+#define T 4
 
 int matriz[T][T];
 
-void readMatriz();
+void readMatriz(int, int);
+void show(int, int);
 int biggerElement(int, int, int);
 int smallerElement(int, int, int);
 
@@ -16,7 +17,8 @@ int main(void) {
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
 
-    readMatriz();
+    readMatriz(0, 0);
+    show(0, 0);
     printf("O maior elemnto é o %d\n", biggerElement(0, 0, matriz[0][0]));
     printf("O menor elemnto é o %d\n", smallerElement(0, 0, matriz[0][0]));
 
@@ -24,16 +26,34 @@ int main(void) {
     return 0;
 }
 
-void readMatriz(int row, int column, int lastNumber) {
-    printf("\n\n");
-    for (int i = 0; i < T; ++i) {
-        for (int j = 0; j < T; ++j) {
-            matriz[i][j] = rand() % 50;
-            printf("%4d", matriz[i][j]);
+void readMatriz(int row, int column) {
+    if (row < T && column < T) {
+        printf("Posição [%d][%d]: ", (row + 1), (column + 1));
+        scanf("%d", &matriz[row][column]);
+        fflush(stdin);
+        system("cls");
+
+        if (column == T - 1) {
+            readMatriz(row + 1, 0);
+        } else {
+            readMatriz(row, column + 1);
         }
-        printf("\n");
     }
-    printf("\n\n");
+}
+
+void show(int row, int column) {
+    if (row < T && column < T) {
+        printf("%3d", matriz[row][column]);
+
+        if (column == T - 1) {
+            printf("\n");
+            show(row + 1, 0);
+        } else {
+            show(row, column + 1);
+        }
+    } else {
+        printf("\n\n");
+    }
 }
 
 int biggerElement(int row, int column, int bigger) {
