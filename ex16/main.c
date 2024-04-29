@@ -10,43 +10,69 @@
 int matriz[ROWS][COLUMNS];
 int transpose[COLUMNS][ROWS];
 
-void readMatriz();
-void show();
+void readMatriz(int, int);
+void show(int, int);
+void showTranspose(int, int);
 void transposeMatriz(int, int);
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
 
-    readMatriz();
+    readMatriz(0, 0);
+    printf("Matriz original\n\n");
+    show(0, 0);
     transposeMatriz(0, 0);
-    show();
+    printf("Matriz transposta\n\n");
+    showTranspose(0, 0);
 
     system("pause");
     return 0;
 }
 
-void readMatriz() {
-    printf("Matriz original\n\n");
-    for (int i = 0; i < ROWS; ++i) {
-        for (int j = 0; j < COLUMNS; ++j) {
-            matriz[i][j] = rand() % 50;
-            printf("%4d", matriz[i][j]);
+void readMatriz(int row, int column) {
+    if (row < ROWS && column < COLUMNS) {
+        printf("Posição [%d][%d]: ", (row + 1), (column + 1));
+        scanf("%d", &matriz[row][column]);
+        fflush(stdin);
+        system("cls");
+
+        if (column == COLUMNS - 1) {
+            readMatriz(row + 1, 0);
+        } else {
+            readMatriz(row, column + 1);
         }
-        printf("\n");
     }
-    printf("\n\n");
 }
 
-void show() {
-    printf("Matriz transposta\n\n");
-    for (int i = 0; i < COLUMNS; ++i) {
-        for (int j = 0; j < ROWS; ++j) {
-            printf("%4d", transpose[i][j]);
+void show(int row, int column) {
+    if (row < ROWS && column < COLUMNS) {
+        printf("%3d", matriz[row][column]);
+
+        if (column == COLUMNS - 1) {
+            printf("\n");
+            show(row + 1, 0);
+        } else {
+            show(row, column + 1);
         }
-        printf("\n");
+    } else {
+        printf("\n\n");
     }
-    printf("\n\n");
+}
+
+void showTranspose(int row, int column) {
+    if (row < COLUMNS && column < ROWS) {
+        printf("%3d", transpose[row][column]);
+
+        if (column == ROWS - 1) {
+            printf("\n");
+            showTranspose(row + 1, 0);
+        } else {
+            showTranspose(row, column + 1);
+        }
+    } else {
+        printf("\n\n");
+    }
 }
 
 void transposeMatriz(int row, int column) {
