@@ -9,7 +9,7 @@ int vetor[T];
 
 void readVector(int);
 void show(int);
-void orderVector(int);
+void orderVector(int, int);
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese");
@@ -17,9 +17,7 @@ int main(void) {
     readVector(0);
     show(0);
 
-    for (int i = 0; i < T; ++i) {
-        orderVector(0);
-    }
+    orderVector(0, 1);
 
     show(0);
 
@@ -47,15 +45,17 @@ void show(int position) {
     }
 }
 
-void orderVector(int position) {
-    if (position < T - 1) {
-        if (vetor[position] > vetor[position + 1]) {
-            int temp = vetor[position];
-            vetor[position] = vetor[position + 1];
-            vetor[position + 1] = temp;
-            orderVector(position);
+void orderVector(int i, int j) {
+    if (i < T - 1) {
+        if (j < T) {
+            if (vetor[i] > vetor[j]) {
+                int temp = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = temp;
+            }
+            orderVector(i, ++j);
         } else {
-            orderVector(position + 1);
+            orderVector(++i, i + 1);
         }
     }
 }
