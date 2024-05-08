@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define T 4
+#define T 5
 
 int matriz[T][T];
 
@@ -62,14 +62,11 @@ int biggerElement(int row, int column, int bigger) {
             bigger = matriz[row][column];
         }
 
-        int result;
-
         if (column == T - 1) {
-            result = biggerElement(row + 1, 0, bigger);
+            return biggerElement(row + 1, 0, bigger);
         } else {
-            result = biggerElement(row, column + 1, bigger);
+            return biggerElement(row, column + 1, bigger);
         }
-        return result;
     }
 
     return bigger;
@@ -81,14 +78,11 @@ int smallerElement(int row, int column, int smaller) {
             smaller = matriz[row][column];
         }
 
-        int result;
-
         if (column == T - 1) {
-            result = smallerElement(row + 1, 0, smaller);
+            return smallerElement(row + 1, 0, smaller);
         } else {
-            result = smallerElement(row, column + 1, smaller);
+            return smallerElement(row, column + 1, smaller);
         }
-        return result;
     }
 
     return smaller;
